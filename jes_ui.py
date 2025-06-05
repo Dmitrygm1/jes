@@ -55,7 +55,7 @@ class UI:
         self.movieScreens = []
         self.sim = None
         
-        self.screen = pygame.display.set_mode((self.W_W,self.W_H))
+        self.screen = pygame.display.set_mode((self.W_W,self.W_H), pygame.RESIZABLE)
         self.mosaicScreen = pygame.Surface((self.MS_WC,self.MS_H), pygame.SRCALPHA, 32)
         self.infoBarScreen = pygame.Surface((self.INFO_W,self.MS_H), pygame.SRCALPHA, 32)
         self.previewLocations = [[570,105,250,250],[570,365,250,250],[570,625,250,250]]
@@ -354,7 +354,13 @@ class UI:
 
     def detectEvents(self):
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.QUIT:
+                self.running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_F11:
+                    self.toggleFullscreen()
+                elif event.key == pygame.K_RETURN and (event.mod & pygame.KMOD_ALT):
+                    self.toggleFullscreen()
                 new_gen = None
                 if event.key == pygame.K_LEFT:
                     new_gen = max(0,self.genSlider.val-1)
@@ -508,5 +514,13 @@ class UI:
             self.movieScreens.append(None)
         self.sample_i += L
         
+    def toggleFullscreen(self):
+        if self.screen.get_flags() & pygame.FULLSCREEN:
+            # Exit fullscreen
+            self.screen = pygame.display.set_mode((self.W_W, self.W_H), pygame.RESIZABLE)
+        else:
+            # Enter fullscreen
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
     def show(self):
         pygame.display.flip()

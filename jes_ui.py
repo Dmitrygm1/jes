@@ -15,10 +15,11 @@ class UI:
         self.sliderList = []
         self.buttonList = []
         pygame.font.init()
-        self.bigFont = pygame.font.Font('C:/Users/caryk/AppData/Local/Microsoft/Windows/Fonts/Jygquip 1.ttf', 60)
-        self.smallFont = pygame.font.Font('C:/Users/caryk/AppData/Local/Microsoft/Windows/Fonts/Jygquip 1.ttf', 30)
-        self.tinyFont = pygame.font.Font('C:/Users/caryk/AppData/Local/Microsoft/Windows/Fonts/Jygquip 1.ttf', 21)
-        self.BACKGROUND_PIC = pygame.image.load("visuals/background.png")
+        self.bigFont = pygame.font.SysFont(None, 60)
+        self.smallFont = pygame.font.SysFont(None, 30)
+        self.tinyFont = pygame.font.SysFont(None, 21)
+        self.BACKGROUND_PIC = None
+
         self.W_W = _W_W
         self.W_H = _W_H
         self.MOVIE_SINGLE_DIM = _MOVIE_SINGLE_DIM
@@ -400,7 +401,8 @@ class UI:
                     self.sliderDrag = None
 
     def drawMenu(self):
-        self.screen.blit(self.BACKGROUND_PIC,(0,0))
+        if self.BACKGROUND_PIC:
+            self.screen.blit(self.BACKGROUND_PIC, (0, 0))
         self.drawMenuText()
         self.drawPreviews()
         displayAllGraphs(self.screen, self.sim, self)

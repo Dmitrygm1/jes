@@ -1,3 +1,17 @@
+import os
+os.environ['SDL_VIDEO_WINDOW_POS'] = '100,100'  # Optional: set window position
+os.environ['SDL_VIDEO_ALLOW_SCREENSAVER'] = '1'
+
+# Set DPI awareness to prevent scaling
+try:
+    import ctypes
+    ctypes.windll.shcore.SetProcessDpiAwareness(1)  # PROCESS_DPI_AWARE
+except:
+    try:
+        ctypes.windll.user32.SetProcessDPIAware()
+    except:
+        pass
+    
 from jes_sim import Sim
 from jes_ui import UI
 
